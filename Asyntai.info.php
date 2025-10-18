@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * Asyntai module info file
+ */
+
+$info = array(
+    'title' => 'Asyntai AI chatbot',
+    'version' => '1.0.0',
+    'summary' => 'AI assistant / chatbot – Provides instant answers to your website visitors',
+    'author' => 'Asyntai',
+    'href' => 'https://asyntai.com/',
+    'singular' => true,
+    'autoload' => true,
+    'icon' => 'comments',
+    'requires' => 'ProcessWire>=3.0.0',
+);
+
