@@ -1,17 +1,21 @@
 # Asyntai - AI Chatbot for ProcessWire
 
-AI assistant / chatbot – Provides instant answers to your website visitors
+Create and launch AI assistant/chatbot for your ProcessWire website in minutes. It talks to your visitors, helps, explains, never misses a chat and can increase conversion rates! All while knowing your website, customized just for you. Your ProcessWire website can now talk.
 
-## Description
+This plugin embeds the Asyntai chatbot on your ProcessWire site and provides a simple admin page to connect your site to Asyntai.
 
-Asyntai is an AI-powered chatbot that provides instant answers to your website visitors. Simply install the module, connect your Asyntai account, and the chatbot will be enabled on all pages of your ProcessWire site.
 
-## Features
+## Why choose Asyntai?
 
-- **Easy Setup**: Connect with your Asyntai account in just a few clicks
-- **Automatic Integration**: Once connected, the chatbot appears on all pages
-- **Customizable**: Configure your AI responses from the Asyntai dashboard
-- **Lightweight**: Minimal impact on site performance
+• **Increase conversions**: Instant, human like replies keep shoppers engaged and buying.
+
+•	**Never miss a chat**: The AI replies day and night, even when your team is offline.
+
+•	**Knows your website**: Customized just for you; it follows your instructions.
+
+•	**Works in all languages**: Automatically detects and answers in the visitor’s language.
+
+•	**Fast responses (1–3s)**: Keeps customers from bouncing.
 
 ## Installation
 
@@ -26,7 +30,7 @@ After installation:
 
 1. Go to Modules → Asyntai 
 2. Click "Get started" to connect your Asyntai account
-3. Sign in or create a free account at asyntai.com
+3. Sign in or create a free account at [asyntai.com](https://asyntai.com/)
 4. The module will automatically save your connection
 5. The chatbot is now live on your site!
 
@@ -43,6 +47,7 @@ https://asyntai.com/dashboard
 ## License
 
 MIT License - see LICENSE file for details
+
 
 
 
