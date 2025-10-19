@@ -1,4 +1,4 @@
-<?php
+<?php namespace ProcessWire;
 
 /**
  * Asyntai - AI Chatbot
@@ -53,59 +53,53 @@ class Asyntai extends WireData implements Module, ConfigurableModule {
      * Initialize the module
      */
     public function init() {
-        // Add frontend script injection hook
-        $this->addHookAfter('Page::render', $this, 'injectWidget');
-        
-        // Handle AJAX save and reset requests early to prevent HTML response
-        $input = $this->wire('input');
-        
-        // Check if this is an AJAX request with our action
-        if($input->post('asyntai_action')) {
-            // Verify we're in the right context
-            if($input->get('name') == 'Asyntai' || 
-               strpos($this->wire('config')->url, 'module/edit') !== false) {
-                $this->handleAjaxRequest();
-            }
+        // Load saved configuration
+        $data = $this->wire('modules')->getModuleConfigData($this);
+        foreach($data as $key => $value) {
+            $this->set($key, $value);
         }
     }
-
+    
     /**
-     * Hook to inject widget script on frontend
+     * Called when API is ready
      */
-    public function injectWidget(HookEvent $event) {
-        // Only inject on frontend pages, not in admin
-        if($this->wire('page')->template == 'admin') return;
+    public function ready() {
+        // Only inject on frontend, not admin
+        $page = $this->wire('page');
+        
+        if($page->template == 'admin') return;
         
         $siteId = trim((string) $this->site_id);
         if($siteId === '') return;
-
-        $scriptUrl = trim((string) $this->script_url);
-        if($scriptUrl === '') {
-            $scriptUrl = 'https://asyntai.com/static/js/chat-widget.js';
-        }
-
-        $html = $event->return;
         
-        $scriptTag = '<script type="text/javascript">'
-            . '(function(){'
-            . 'var s=document.createElement("script");'
-            . 's.async=true;'
-            . 's.defer=true;'
-            . 's.src=' . json_encode($scriptUrl) . ';'
-            . 's.setAttribute("data-asyntai-id",' . json_encode($siteId) . ');'
-            . 's.charset="UTF-8";'
-            . 'var f=document.getElementsByTagName("script")[0];'
-            . 'if(f&&f.parentNode){f.parentNode.insertBefore(s,f);}else{document.head.appendChild(s);}'
-            . '})();'
-            . '</script>';
-
-        if(strpos($html, '</body>') !== false) {
-            $html = str_replace('</body>', $scriptTag . '</body>', $html);
-        } else {
-            $html .= $scriptTag;
-        }
-        
-        $event->return = $html;
+        // Start output buffering to inject script
+        ob_start(function($html) use ($siteId) {
+            $scriptUrl = trim((string) $this->script_url);
+            if($scriptUrl === '') {
+                $scriptUrl = 'https://asyntai.com/static/js/chat-widget.js';
+            }
+            
+            $scriptTag = '<script type="text/javascript">'
+                . '(function(){'
+                . 'var s=document.createElement("script");'
+                . 's.async=true;'
+                . 's.defer=true;'
+                . 's.src=' . json_encode($scriptUrl) . ';'
+                . 's.setAttribute("data-asyntai-id",' . json_encode($siteId) . ');'
+                . 's.charset="UTF-8";'
+                . 'var f=document.getElementsByTagName("script")[0];'
+                . 'if(f&&f.parentNode){f.parentNode.insertBefore(s,f);}else{document.head.appendChild(s);}'
+                . '})();'
+                . '</script>';
+            
+            if(strpos($html, '</body>') !== false) {
+                $html = str_replace('</body>', $scriptTag . '</body>', $html);
+            } else {
+                $html .= $scriptTag;
+            }
+            
+            return $html;
+        });
     }
 
     /**
@@ -165,12 +159,19 @@ class Asyntai extends WireData implements Module, ConfigurableModule {
             $data['account_email'] = $accountEmail;
         }
 
-        $this->wire('modules')->saveModuleConfigData($this, $data);
-        
-        $this->sendJson(array(
-            'success' => true,
-            'saved' => $data
-        ));
+        try {
+            $this->wire('modules')->saveModuleConfigData($this, $data);
+            
+            $this->sendJson(array(
+                'success' => true,
+                'saved' => $data
+            ));
+        } catch(\Exception $e) {
+            $this->sendJson(array(
+                'success' => false, 
+                'error' => 'Save failed: ' . $e->getMessage()
+            ), 500);
+        }
     }
 
     /**
@@ -211,7 +212,15 @@ class Asyntai extends WireData implements Module, ConfigurableModule {
      * Build configuration form
      */
     public function getModuleConfigInputfields(array $data) {
-        $inputfields = $this->wire(new InputfieldWrapper());
+        // Handle AJAX requests FIRST, before any HTML is generated
+        $input = $this->wire('input');
+        if($input->post('asyntai_action')) {
+            $this->handleAjaxRequest();
+            // handleAjaxRequest will exit, so we never reach here
+        }
+        
+        $modules = $this->wire('modules');
+        $inputfields = $modules->get('InputfieldWrapper');
         
         $siteId = isset($data['site_id']) ? trim((string) $data['site_id']) : '';
         $accountEmail = isset($data['account_email']) ? trim((string) $data['account_email']) : '';
@@ -219,7 +228,7 @@ class Asyntai extends WireData implements Module, ConfigurableModule {
         $connected = $siteId !== '';
 
         // Add custom markup for status and connection UI
-        $markup = $this->wire('modules')->get('InputfieldMarkup');
+        $markup = $modules->get('InputfieldMarkup');
         $markup->label = $this->_('Asyntai Connection');
         $markup->icon = 'comments';
         
