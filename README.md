@@ -34,7 +34,7 @@ After installation:
 4. The module will automatically save your connection
 5. The chatbot is now live on your site!
 
-Don't have an account yet? Create a free Asyntai account at [asyntai.com/auth](https://asyntai.com/)
+Don't have an account yet? Create a free Asyntai account at [asyntai.com/auth](https://asyntai.com/auth)
 
 ## Managing Your Chatbot
 
@@ -57,5 +57,6 @@ Email us at hello@asyntai.com or try our chatbot directly at [asyntai.com/](http
 ![Asyntai AI chatbot 3](https://asyntai.com/static/images/ai-chatbot-for-websites-3.png)
 ![Asyntai AI chatbot 4](https://asyntai.com/static/images/ai-chatbot-for-websites-4.png)
 ![Asyntai AI chatbot 5](https://asyntai.com/static/images/ai-chatbot-for-websites-5.png)
+
 
 
