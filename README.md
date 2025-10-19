@@ -30,24 +30,32 @@ After installation:
 
 1. Go to Modules → Asyntai 
 2. Click "Get started" to connect your Asyntai account
-3. Sign in or create a free account at [asyntai.com](https://asyntai.com/)
+3. Sign in or create a free account
 4. The module will automatically save your connection
 5. The chatbot is now live on your site!
+
+Don't have an account yet? Create a free Asyntai account at [asyntai.com/auth](https://asyntai.com/)
 
 ## Managing Your Chatbot
 
 Once connected, you can manage your chatbot settings, review chat logs, and customize AI responses at:
-https://asyntai.com/dashboard
+[asyntai.com/dashboard](https://asyntai.com/dashboard)
 
 ## Requirements
 
 - ProcessWire 3.0.0 or higher
 - PHP 7.2 or higher
 
-## License
-
-MIT License - see LICENSE file for details
 
 
+## Have a question? 
+Email us at hello@asyntai.com or try our chatbot directly at [asyntai.com/](https://asyntai.com/)
+
+
+![Asyntai AI chatbot 1](https://asyntai.com/static/images/ai-chatbot-for-websites-1.png)
+![Asyntai AI chatbot 2](https://asyntai.com/static/images/ai-chatbot-for-websites-2.png)
+![Asyntai AI chatbot 3](https://asyntai.com/static/images/ai-chatbot-for-websites-3.png)
+![Asyntai AI chatbot 4](https://asyntai.com/static/images/ai-chatbot-for-websites-4.png)
+![Asyntai AI chatbot 5](https://asyntai.com/static/images/ai-chatbot-for-websites-5.png)
 
 
